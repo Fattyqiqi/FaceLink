@@ -1,3 +1,5 @@
+__version__ = "0.0.1"
+
 from bluepy.btle import Scanner, DefaultDelegate
 import pandas as pd
 
