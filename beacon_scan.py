@@ -1,5 +1,6 @@
 __version__ = "0.0.3"
 
+import os
 from bluepy.btle import Scanner, DefaultDelegate
 import pandas as pd
 
@@ -11,7 +12,6 @@ saved in its place.
 """
     import urllib
     import re
-    import os
     from subprocess import call
     def compare_versions(vA, vB):
         """
