@@ -1,9 +1,28 @@
 __version__ = "0.0.10"
 
 import os
+import sys
 from bluepy.btle import Scanner, DefaultDelegate
 import pandas as pd
 
+import psutil
+import logging
+
+def restart_program():
+    """Restarts the current program, with file objects and descriptors
+       cleanup
+    """
+
+    try:
+        p = psutil.Process(os.getpid())
+        for handler in p.get_open_files() + p.connections():
+            os.close(handler.fd)
+    except Exception, e:
+        logging.error(e)
+
+    python = sys.executable
+    os.execl(python, python, *sys.argv)
+	
 def update(dl_url, force_update=False):
     """
 Attempts to download the update url in order to find if an update is needed.
@@ -50,17 +69,17 @@ Compares two version number strings
     except IOError, (errno, strerror):
         print "Unable to retrieve version data"
         print "Error %s: %s" % (errno, strerror)
-        return
+        return 0
 
     match_regex = re.search(r'__version__ *= *"(\S+)"', update_file)
     if not match_regex:
         print "No version info could be found"
-        return
+        return 0
     update_version = match_regex.group(1)
 
     if not update_version:
         print "Unable to parse version data"
-        return
+        return 0
 
     if force_update:
         print "Forcing update, downloading version %s..." \
@@ -72,10 +91,10 @@ Compares two version number strings
         elif cmp_result > 0:
             print "Local version %s newer then available %s, not updating." \
                 % (__version__, update_version)
-            return
+            return 0
         else:
             print "You already have the latest version."
-            return
+            return 0
 
 	
     import sys
@@ -120,21 +139,21 @@ Compares two version number strings
     except IOError, (errno, strerror):
         print "Download failed"
         print "Error %s: %s" % (errno, strerror)
-        return
+        return 0
 
     try:
         os.rename(app_path, backup_path)
     except OSError, (errno, strerror):
         print "Unable to rename %s to %s: (%d) %s" \
             % (app_path, backup_path, errno, strerror)
-        return
+        return 0
 
     try:
         os.rename(dl_path, app_path)
     except OSError, (errno, strerror):
         print "Unable to rename %s to %s: (%d) %s" \
             % (dl_path, app_path, errno, strerror)
-        return
+        return 0
 
     try:
         import shutil
@@ -144,7 +163,7 @@ Compares two version number strings
 
     print "New version installed as %s" % app_path
     print "(previous version backed up to %s)" % (backup_path)
-    return
+    return 1
 
 
 class ScanDelegate(DefaultDelegate):
@@ -158,7 +177,9 @@ class ScanDelegate(DefaultDelegate):
 			print("Received new data from", dev.addr)
 
 while(True):
-	update('https://raw.githubusercontent.com/arash-ash/FaceLink/master/beacon_scan.py')
+	status = update('https://raw.githubusercontent.com/arash-ash/FaceLink/master/beacon_scan.py')
+	if status == 1:
+		restart_program()
 	scanner = Scanner().withDelegate(ScanDelegate())
 	devices = scanner.scan(5.0)
 
