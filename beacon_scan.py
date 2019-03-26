@@ -1,7 +1,6 @@
 __version__ = "0.0.8"
 
 import os
-import sys
 from bluepy.btle import Scanner, DefaultDelegate
 import pandas as pd
 
@@ -78,6 +77,8 @@ Compares two version number strings
             print "You already have the latest version."
             return
 
+	
+    import sys
     # dl, backup, and save the updated script
     app_path = os.path.realpath(sys.argv[0])
 
