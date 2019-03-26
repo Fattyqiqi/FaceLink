@@ -1,4 +1,4 @@
-__version__ = "0.0.4"
+__version__ = "0.0.5"
 
 import os
 from bluepy.btle import Scanner, DefaultDelegate
@@ -164,7 +164,7 @@ while(True):
 #	try :
 	for dev in devices:
 		dict[dev.addr] = dev.rssi
-		print("Device %s (%s), RSSI=%d dB" % (dev.addr, dev.addrType, dev.rssi))
+#		print("Device %s (%s), RSSI=%d dB" % (dev.addr, dev.addrType, dev.rssi))
 	for (adtype, desc, value) in dev.getScanData():
 		print("  %s = %s" % (desc, value))
 
