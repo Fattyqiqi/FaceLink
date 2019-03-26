@@ -1,4 +1,4 @@
-__version__ = "0.0.11"
+__version__ = "0.0.12"
 
 import os
 import sys
@@ -76,7 +76,9 @@ Compares two version number strings
         print "No version info could be found"
         return 0
     update_version = match_regex.group(1)
-
+	
+    print(update_version)
+	
     if not update_version:
         print "Unable to parse version data"
         return 0
