@@ -1,4 +1,4 @@
-__version__ = "0.0.13"
+__version__ = "0.0.14"
 
 import os
 import sys
@@ -178,26 +178,27 @@ class ScanDelegate(DefaultDelegate):
 		elif isNewData:
 			print("Received new data from", dev.addr)
 
-while(True):
-	status = update('https://raw.githubusercontent.com/arash-ash/FaceLink/master/beacon_scan.py')
-	if status == 1:
-		restart_program()
-	scanner = Scanner().withDelegate(ScanDelegate())
-	devices = scanner.scan(2.0)
+if __name__ == '__main__':
+	while(True):
+		status = update('https://raw.githubusercontent.com/arash-ash/FaceLink/master/beacon_scan.py')
+		if status == 1:
+			restart_program()
+		scanner = Scanner().withDelegate(ScanDelegate())
+		devices = scanner.scan(2.0)
 
-	dict = {}
-#	try :
-	for dev in devices:
-		dict[dev.addr] = dev.rssi
-#		print("Device %s (%s), RSSI=%d dB" % (dev.addr, dev.addrType, dev.rssi))
-	for (adtype, desc, value) in dev.getScanData():
-		print("  %s = %s" % (desc, value))
+		dict = {}
+	#	try :
+		for dev in devices:
+			dict[dev.addr] = dev.rssi
+	#		print("Device %s (%s), RSSI=%d dB" % (dev.addr, dev.addrType, dev.rssi))
+		for (adtype, desc, value) in dev.getScanData():
+			print("  %s = %s" % (desc, value))
 
-	file = open('data.html', 'w+')
-	df = pd.DataFrame.from_dict(dict, orient='index')
-	df = df.sort_values(0)
-	data = df.to_html()
-	file.write(data)
-	file.close()
-#	except:
-#		print('no device found!')
+		file = open('data.html', 'w+')
+		df = pd.DataFrame.from_dict(dict, orient='index')
+		df = df.sort_values(0)
+		data = df.to_html()
+		file.write(data)
+		file.close()
+	#	except:
+	#		print('no device found!')
