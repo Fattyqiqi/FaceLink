@@ -1,4 +1,4 @@
-__version__ = "0.0.12"
+__version__ = "0.0.13"
 
 import os
 import sys
@@ -183,7 +183,7 @@ while(True):
 	if status == 1:
 		restart_program()
 	scanner = Scanner().withDelegate(ScanDelegate())
-	devices = scanner.scan(5.0)
+	devices = scanner.scan(2.0)
 
 	dict = {}
 #	try :
