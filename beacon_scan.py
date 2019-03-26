@@ -11,6 +11,7 @@ saved in its place.
 """
     import urllib
     import re
+    import os
     from subprocess import call
     def compare_versions(vA, vB):
         """
