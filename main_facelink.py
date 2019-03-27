@@ -180,4 +180,3 @@ if __name__ == '__main__':
             'https://raw.githubusercontent.com/arash-ash/FaceLink/master/main_facelink.py')
         if status == 1:
             restart_program()
-        scanner = Scanner().withDelegate(ScanDelegate())
