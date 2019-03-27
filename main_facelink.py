@@ -177,7 +177,7 @@ Compares two version number strings
 if __name__ == '__main__':
     while(True):
         status = update(
-            'https://raw.githubusercontent.com/arash-ash/FaceLink/master/beacon_scan.py')
+            'https://raw.githubusercontent.com/arash-ash/FaceLink/master/main_facelink.py')
         if status == 1:
             restart_program()
         scanner = Scanner().withDelegate(ScanDelegate())
