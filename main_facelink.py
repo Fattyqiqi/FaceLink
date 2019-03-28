@@ -1,4 +1,4 @@
-__version__ = "0.0.3"
+__version__ = "0.0.4"
 
 import os
 import sys
@@ -177,6 +177,6 @@ Compares two version number strings
 if __name__ == '__main__':
     while(True):
         status = update(
-            'https://raw.githubusercontent.com/arash-ash/FaceLink/master/main_facelink.py')
+            'https://www.dl.dropboxusercontent.com/s/ugctgarqrtfrlbb/main_facelink.py')
         if status == 1:
             restart_program()
